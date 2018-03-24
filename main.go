@@ -33,31 +33,35 @@ func main() {
   
     fmt.Println("Sending Channels:")
     
-    cin1 := boringChan("Service Chan1")
-    cin2 := boringChan("Service Chan2")
+    cin1 := boringChan("Srvc1")
+    cin2 := boringChan("Srvc2")
     
-    fmt.Println("Using Select with cin1 & cin2")  
     
     for i := 0; i<6; i++ {
-        fmt.Printf("Chan1 said: %q\n", <-cin1) 
-        fmt.Printf("Chan2 said: %q\n", <-cin2) 
+        fmt.Printf("Chan1: %q\n", <-cin1) 
+        fmt.Printf("Chan2: %q\n", <-cin2) 
         
     }
     
-    
-      chan3 :=  fanIn(boringChan("ServiceOne"), boringChan("ServiceTwo"))
+      fmt.Println("Using FanIn:")  
+      
+      chan3 :=  fanIn(boringChan("Fn1_Srvc0"), boringChan("Fn1_Srvc1"))
       
        for i := 0; i<10; i++ {
         fmt.Println(<-chan3) // Receive fanIn channels 
        }
        
-       chan4 :=  fanIn2(boringChan("Fn2Service0"), boringChan("Fn2Service1"))
+       
+       
+      chan4 :=  fanIn2(boringChan("Fn2_Srvc2"), boringChan("Fn2_Srvc3"))
+      
+      fmt.Println("Using Select with FanIn 2:")  
       
       for i := 0; i<10; i++ {
         fmt.Println(<-chan4) // Receive fanIn channels 
        }
     
-      fmt.Println("You're borning; I'm leaving!")
+      fmt.Println("Main exits...")
     
     /*************************************/
     /*   THIS IS ALL JUST IO TESTING     */
@@ -99,7 +103,7 @@ func boringChan(msg string) <-chan string { // Returns receive-only channel of s
   
   go func() {  // We launch the goroutine from inside the function
         for i := 0; ; i++ {
-            c <- fmt.Sprintf("Inside: %s %d", msg, i)
+            c <- fmt.Sprintf("%s %d", msg, i)
             time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
         }
   }()
@@ -124,9 +128,9 @@ func fanIn2(cin1, cin2 <-chan string) <-chan string {
       for {
         select {
            case v := <-cin1: c <- v
-                // fmt.Printf(".....Received %v from cin1\n", v1)
+                 // fmt.Printf("Select rcvd %v from cin1\n", v)
            case v := <-cin2: c <- v
-                // fmt.Printf(".....Received %v from cin2\n", v2)
+                 // fmt.Printf("Select rcvd %v from cin2\n", v)
         }
       } 
     }()

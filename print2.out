@@ -3,39 +3,40 @@ You say: "Boring! 0"
 You say: "Boring! 1"
 You say: "Boring! 2"
 Sending Channels:
-Using Select with cin1 & cin2
-Chan1 said: "Inside: Service Chan1 0"
-Chan2 said: "Inside: Service Chan2 0"
-Chan1 said: "Inside: Service Chan1 1"
-Chan2 said: "Inside: Service Chan2 1"
-Chan1 said: "Inside: Service Chan1 2"
-Chan2 said: "Inside: Service Chan2 2"
-Chan1 said: "Inside: Service Chan1 3"
-Chan2 said: "Inside: Service Chan2 3"
-Chan1 said: "Inside: Service Chan1 4"
-Chan2 said: "Inside: Service Chan2 4"
-Chan1 said: "Inside: Service Chan1 5"
-Chan2 said: "Inside: Service Chan2 5"
-Inside: ServiceTwo 0
-Inside: ServiceOne 0
-Inside: ServiceOne 1
-Inside: ServiceTwo 1
-Inside: ServiceTwo 2
-Inside: ServiceTwo 3
-Inside: ServiceOne 2
-Inside: ServiceTwo 4
-Inside: ServiceOne 3
-Inside: ServiceOne 4
-Inside: Fn2Service0 0
-Inside: Fn2Service1 0
-Inside: Fn2Service1 1
-Inside: Fn2Service1 2
-Inside: Fn2Service1 3
-Inside: Fn2Service0 1
-Inside: Fn2Service1 4
-Inside: Fn2Service0 2
-Inside: Fn2Service0 3
-Inside: Fn2Service1 5
-You're borning; I'm leaving!
+Chan1: "Srvc1 0"
+Chan2: "Srvc2 0"
+Chan1: "Srvc1 1"
+Chan2: "Srvc2 1"
+Chan1: "Srvc1 2"
+Chan2: "Srvc2 2"
+Chan1: "Srvc1 3"
+Chan2: "Srvc2 3"
+Chan1: "Srvc1 4"
+Chan2: "Srvc2 4"
+Chan1: "Srvc1 5"
+Chan2: "Srvc2 5"
+Using FanIn:
+Fn1_Srvc1 0
+Fn1_Srvc0 0
+Fn1_Srvc0 1
+Fn1_Srvc1 1
+Fn1_Srvc1 2
+Fn1_Srvc1 3
+Fn1_Srvc0 2
+Fn1_Srvc1 4
+Fn1_Srvc0 3
+Fn1_Srvc0 4
+Using Select with FanIn 2:
+Fn2_Srvc2 0
+Fn2_Srvc3 0
+Fn2_Srvc3 1
+Fn2_Srvc3 2
+Fn2_Srvc3 3
+Fn2_Srvc2 1
+Fn2_Srvc3 4
+Fn2_Srvc2 2
+Fn2_Srvc2 3
+Fn2_Srvc3 5
+Main exits...
 Version: 0.0.0  Univrs.io
-Current time: 2018-03-24 19:26:48.257037134 +0000 UTC m=+6.251415032
+Current time: 2018-03-24 19:43:19.245109512 +0000 UTC m=+6.253303183
