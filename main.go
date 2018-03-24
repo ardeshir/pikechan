@@ -23,7 +23,7 @@ func main() {
     c := make(chan string)
     go boring("Boring!", c)
     
-    for i := 0; i<5; i++ {
+    for i := 0; i<3; i++ {
         fmt.Printf("You say: %q\n", <-c) // Receive expression is just value.
     }
   
@@ -33,12 +33,17 @@ func main() {
     cin2 := boringChan("Service Chan 2!")
     
 
-     for i := 0; i<5; i++ {
+     for i := 0; i<6; i++ {
         fmt.Printf("Chan1 said: %q\n", <-cin1) 
         fmt.Printf("Chan2 said: %q\n", <-cin2) 
         
     }
     
+      chan3 :=  fanIn(boringChan("NServiceOne"), boringChan("NServiceTwo"))
+      
+       for i := 0; i<12; i++ {
+        fmt.Println(<-chan3) // Receive fanIn channels 
+       }
     
       fmt.Println("You're borning; I'm leaving!")
     
@@ -89,6 +94,19 @@ func boringChan(msg string) <-chan string { // Returns receive-only channel of s
 
   return c // Return the channel to the caller
 }
+
+// Multiplexing
+func fanIn(input1, input2 <-chan string) <-chan string {
+    c := make(chan string)
+    go func() { for { c <- <- input1 } } ()
+    go func() { for { c <- <- input2 } } ()
+    
+    return c
+}
+
+
+
+
 /******************************************/
 /*   IO FUNTIONS **************************/
 
