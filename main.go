@@ -52,7 +52,6 @@ func main() {
        }
        
        
-       
       chan4 :=  fanIn2(boringChan("Fn2_Srvc2"), boringChan("Fn2_Srvc3"))
       
       fmt.Println("Using Select with FanIn 2:")  
@@ -61,7 +60,8 @@ func main() {
         fmt.Println(<-chan4) // Receive fanIn channels 
        }
     
-      fmt.Println("Main exits...")
+    
+      fmt.Println("main exits...")
     
     /*************************************/
     /*   THIS IS ALL JUST IO TESTING     */
@@ -112,6 +112,26 @@ func boringChan(msg string) <-chan string { // Returns receive-only channel of s
 }
 
 // Multiplexing
+
+func fan(input1 <- chan string) <- chan string {
+     c := make(chan string)
+     timeout := time.After(2 * time.Second)
+      go func() {
+       for {
+           select {
+               
+               case s := <-input1 : c <- s
+                     // fmt.Println(s)
+               case <-timeout:
+                     fmt.Println("Joe is not talking, bye!")          
+               return    
+           }
+       }
+      }()
+    return c
+}
+
+
 func fanIn(input1, input2 <-chan string) <-chan string {
     c := make(chan string)
     go func() { for { c <- <- input1 } } ()
