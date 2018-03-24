@@ -29,11 +29,11 @@ func main() {
   
     fmt.Println("Sending Channels:")
     
-    cin1 := boringChan("Service Chan 1!")
-    cin2 := boringChan("Service Chan 2!")
+    cin1 := boringChan("Service Chan1")
+    cin2 := boringChan("Service Chan2")
     
 
-     for i := 0; i<6; i++ {
+     for i := 0; i<5; i++ {
         fmt.Printf("Chan1 said: %q\n", <-cin1) 
         fmt.Printf("Chan2 said: %q\n", <-cin2) 
         
@@ -41,7 +41,7 @@ func main() {
     
       chan3 :=  fanIn(boringChan("NServiceOne"), boringChan("NServiceTwo"))
       
-       for i := 0; i<12; i++ {
+       for i := 0; i<10; i++ {
         fmt.Println(<-chan3) // Receive fanIn channels 
        }
     
@@ -85,7 +85,7 @@ func boring(msg string, c chan string) {
 func boringChan(msg string) <-chan string { // Returns receive-only channel of strings
   c := make(chan string)
   
-  go func() {  // We launch the goroutine form inside the function
+  go func() {  // We launch the goroutine from inside the function
         for i := 0; ; i++ {
             c <- fmt.Sprintf("Inside: %s %d", msg, i)
             time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
