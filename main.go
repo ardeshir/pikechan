@@ -18,18 +18,29 @@ var (
 
 func main() {
     
+    fmt.Println("Basic channel:")
+    
     c := make(chan string)
     go boring("Boring!", c)
     
     for i := 0; i<5; i++ {
         fmt.Printf("You say: %q\n", <-c) // Receive expression is just value.
     }
-    fmt.Println("You're borning; I'm leaving!")
+  
+    fmt.Println("Sending Channels:")
     
-    cin := boringChan("BoringChan!")
+    cin1 := boringChan("Service Chan 1!")
+    cin2 := boringChan("Service Chan 2!")
+    
+
      for i := 0; i<5; i++ {
-        fmt.Printf("BorChan said: %q\n", <-cin) // 
+        fmt.Printf("Chan1 said: %q\n", <-cin1) 
+        fmt.Printf("Chan2 said: %q\n", <-cin2) 
+        
     }
+    
+    
+      fmt.Println("You're borning; I'm leaving!")
     
     /*************************************/
     /*   THIS IS ALL JUST IO TESTING     */
