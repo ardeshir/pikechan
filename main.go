@@ -1,7 +1,9 @@
 package main
 
 import (
-   // "fmt"
+   "fmt"
+   "time"
+   "math/rand"
    "io"
    "flag"
    "os"
@@ -16,8 +18,12 @@ var (
 
 func main() {
     
-    
-    
+    c := make(chan string)
+    go boring("Boring!", c)
+    for i := 0; i<5; i++ {
+        fmt.Printf("You say: %q\n", <-c) // Receive expression is just value.
+    }
+    fmt.Println("You're borning; I'm leaving!")
     
     
     /*************************************/
@@ -45,6 +51,20 @@ func main() {
   }
 
 }
+
+/******* CHAN FUNCTION ********/
+
+func boring(msg string, c chan string) {
+    for i := 0; ; i++ {
+        c <- fmt.Sprintf("%s %d", msg, i )  // Expression to be sent can be any suitable value.
+        time.Sleep(time.Duration( rand.Intn(1e3) ) * time.Millisecond)
+    }
+}
+
+
+/******************************************/
+/*   IO FUNTIONS **************************/
+
 func writeToFile(filename string, text string) {
     f, err := os.Create(filename)
     u.ErrNil(err, "wtf: Can't create new file")
