@@ -20,19 +20,24 @@ func main() {
     
     c := make(chan string)
     go boring("Boring!", c)
+    
     for i := 0; i<5; i++ {
         fmt.Printf("You say: %q\n", <-c) // Receive expression is just value.
     }
     fmt.Println("You're borning; I'm leaving!")
     
+    cin := boringChan("BoringChan!")
+     for i := 0; i<5; i++ {
+        fmt.Printf("BorChan said: %q\n", <-cin) // 
+    }
     
     /*************************************/
-    /*   THIS IS ALL FOR JUST IO TESTING */
+    /*   THIS IS ALL JUST IO TESTING     */
     /*************************************/
-    filename    := flag.String("file", defaultFile(), "Name of 1st file to use with createFile() ")
-    // text        := flag.String("text", "This default text will be printed\n", "Some text goes here")
-    // newfilename := flag.String("newfile", defaultFile2(), "Name of 2nd file use with createFile() ")
-    flag.Parse()
+     filename    := flag.String("file", defaultFile(), "Name of 1st file to use with createFile() ")
+     // text        := flag.String("text", "This default text will be printed\n", "Some text goes here")
+     // newfilename := flag.String("newfile", defaultFile2(), "Name of 2nd file use with createFile() ")
+     flag.Parse()
     
      deleteFile(*filename)
      // delete file used the checkExistance before deleting.
@@ -61,7 +66,18 @@ func boring(msg string, c chan string) {
     }
 }
 
+func boringChan(msg string) <-chan string { // Returns receive-only channel of strings
+  c := make(chan string)
+  
+  go func() {  // We launch the goroutine form inside the function
+        for i := 0; ; i++ {
+            c <- fmt.Sprintf("Inside: %s %d", msg, i)
+            time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+        }
+  }()
 
+  return c // Return the channel to the caller
+}
 /******************************************/
 /*   IO FUNTIONS **************************/
 
