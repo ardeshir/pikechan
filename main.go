@@ -15,12 +15,16 @@ var (
  debug bool = false
  version string = "0.0.0"
  )
+ 
+ 
 
 func main() {
     
     fmt.Println("Basic channel:")
     
     c := make(chan string)
+    
+    
     go boring("Boring!", c)
     
     for i := 0; i<3; i++ {
@@ -32,17 +36,25 @@ func main() {
     cin1 := boringChan("Service Chan1")
     cin2 := boringChan("Service Chan2")
     
-
-     for i := 0; i<5; i++ {
+    fmt.Println("Using Select with cin1 & cin2")  
+    
+    for i := 0; i<6; i++ {
         fmt.Printf("Chan1 said: %q\n", <-cin1) 
         fmt.Printf("Chan2 said: %q\n", <-cin2) 
         
     }
     
-      chan3 :=  fanIn(boringChan("NServiceOne"), boringChan("NServiceTwo"))
+    
+      chan3 :=  fanIn(boringChan("ServiceOne"), boringChan("ServiceTwo"))
       
        for i := 0; i<10; i++ {
         fmt.Println(<-chan3) // Receive fanIn channels 
+       }
+       
+       chan4 :=  fanIn2(boringChan("Fn2Service0"), boringChan("Fn2Service1"))
+      
+      for i := 0; i<10; i++ {
+        fmt.Println(<-chan4) // Receive fanIn channels 
        }
     
       fmt.Println("You're borning; I'm leaving!")
@@ -104,8 +116,23 @@ func fanIn(input1, input2 <-chan string) <-chan string {
     return c
 }
 
-
-
+func fanIn2(cin1, cin2 <-chan string) <-chan string {
+    c := make(chan string)
+    
+    go func() { 
+        
+      for {
+        select {
+           case v := <-cin1: c <- v
+                // fmt.Printf(".....Received %v from cin1\n", v1)
+           case v := <-cin2: c <- v
+                // fmt.Printf(".....Received %v from cin2\n", v2)
+        }
+      } 
+    }()
+    
+    return c
+}
 
 /******************************************/
 /*   IO FUNTIONS **************************/
